@@ -22,6 +22,7 @@ import org.jetbrains.jet.codegen.inline.InlineCodegenUtil;
 import org.jetbrains.jet.codegen.optimization.boxing.RedundantBoxingMethodTransformer;
 import org.jetbrains.jet.codegen.optimization.boxing.RedundantNullCheckMethodTransformer;
 import org.jetbrains.jet.codegen.optimization.transformer.MethodTransformer;
+import org.jetbrains.jet.codegen.optimization.variables.VariablesCopyPropagationMethodTransformer;
 import org.jetbrains.org.objectweb.asm.MethodVisitor;
 import org.jetbrains.org.objectweb.asm.Opcodes;
 import org.jetbrains.org.objectweb.asm.tree.LocalVariableNode;
@@ -36,7 +37,8 @@ public class OptimizationMethodVisitor extends MethodVisitor {
     private static final int MEMORY_LIMIT_BY_METHOD_MB = 50;
     private static final MethodTransformer[] TRANSFORMERS = new MethodTransformer[]{
             new RedundantNullCheckMethodTransformer(), new RedundantBoxingMethodTransformer(),
-            new RedundantGotoMethodTransformer(), new StoreStackBeforeInlineMethodTransformer()
+            new RedundantGotoMethodTransformer(), new StoreStackBeforeInlineMethodTransformer(),
+            new VariablesCopyPropagationMethodTransformer()
     };
 
     private final MethodNode methodNode;
