@@ -1,9 +1,9 @@
-fun box(): String {
-    val x = "abcde".length // 0
-    val y = x // 1
-    val z = y  // 2
+inline fun boxInline(): String {
+    val x = "abcde".length
+    val y = x
+    val z = y
 
-    val z1: Int // 3
+    val z1: Int
 
     if (1 == 1) {
         z1 = y
@@ -18,9 +18,15 @@ fun box(): String {
     if (z1 != 5) {
         return "fail z1: $z1"
     }
+
     return "OK"
+}
+
+fun box(): String {
+    return boxInline()
 }
 
 // 0 LOAD 1
 // 0 LOAD 2
-// 2 LOAD 3
+// 4 LOAD 3
+// 8 STORE

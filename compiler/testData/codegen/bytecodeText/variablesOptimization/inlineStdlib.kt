@@ -11,3 +11,4 @@ fun box() {
 // 0 LOAD 7
 // 0 LOAD 8
 // 0 LOAD 9
+// 21 STORE

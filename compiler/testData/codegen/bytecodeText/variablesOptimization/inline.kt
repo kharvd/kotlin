@@ -8,3 +8,4 @@ fun box() {
 }
 
 // 0 ILOAD 2
+// 3 STORE

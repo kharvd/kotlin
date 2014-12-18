@@ -23,6 +23,8 @@ import org.jetbrains.org.objectweb.asm.tree.analysis.BasicValue
 import org.jetbrains.org.objectweb.asm.tree.InsnList
 import org.jetbrains.org.objectweb.asm.tree.VarInsnNode
 import org.jetbrains.org.objectweb.asm.Opcodes
+import org.jetbrains.jet.codegen.optimization.common.getStackTop
+import org.jetbrains.jet.codegen.optimization.common.isLoadOperation
 
 private class VariablesCopyPropagationResolver(val frames: Array<Frame<BasicValue?>?>, val insns: InsnList) {
     // defined only for instruction indices where variable definition happens

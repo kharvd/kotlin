@@ -1,5 +1,5 @@
 
-fun box(): String {
+inline fun boxInline(): String {
     val x = "abcde".length
     val y = x
     val z = y
@@ -21,4 +21,8 @@ fun box(): String {
     }
 
     return "OK"
+}
+
+fun box(): String {
+    return boxInline()
 }

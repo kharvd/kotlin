@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.jetbrains.jet.codegen.optimization.variables
+package org.jetbrains.jet.codegen.optimization.common
 
 import org.jetbrains.org.objectweb.asm.tree.AbstractInsnNode
 import org.jetbrains.org.objectweb.asm.Opcodes
@@ -23,4 +23,5 @@ import org.jetbrains.org.objectweb.asm.tree.analysis.BasicValue
 
 fun AbstractInsnNode.isStoreOperation(): Boolean = getOpcode() in Opcodes.ISTORE..Opcodes.ASTORE
 fun AbstractInsnNode.isLoadOperation(): Boolean = getOpcode() in Opcodes.ILOAD..Opcodes.ALOAD
+fun AbstractInsnNode.isReturnOperation(): Boolean = getOpcode() in Opcodes.IRETURN..Opcodes.RETURN
 fun <V : BasicValue?> Frame<V>.getStackTop(): V = getStack(getStackSize() - 1)

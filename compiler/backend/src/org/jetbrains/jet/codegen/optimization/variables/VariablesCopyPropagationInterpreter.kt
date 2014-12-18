@@ -27,6 +27,7 @@ import org.jetbrains.org.objectweb.asm.tree.InsnList
 import java.util.BitSet
 import org.jetbrains.org.objectweb.asm.tree.VarInsnNode
 import org.jetbrains.org.objectweb.asm.tree.IincInsnNode
+import org.jetbrains.jet.codegen.optimization.common.isStoreOperation
 
 class ReachingDefinitionsValue private (storedValue: BasicValue) : BasicValue(storedValue.getType()) {
     class object {
