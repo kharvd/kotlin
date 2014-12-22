@@ -205,7 +205,7 @@ class BasicCompletionSession(configuration: CompletionSessionConfiguration,
                 return if (annotationEntry.getParent() is JetAnnotation)
                     CompletionKind.ANNOTATION_TYPES
                 else
-                    CompletionKind.ANNOTATION_TYPES_OR_PARAMETER_NAME
+                    CompletionKind.ANNOTATION_TYPES_OR_PARAMETER_NAME //TODO: not only parameter!
             }
         }
 

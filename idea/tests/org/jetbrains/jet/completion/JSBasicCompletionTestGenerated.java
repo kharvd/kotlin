@@ -882,6 +882,18 @@ public class JSBasicCompletionTestGenerated extends AbstractJSBasicCompletionTes
                 JetTestUtils.assertAllTestsPresentByMetadata(this.getClass(), new File("idea/testData/completion/basic/common/annotations"), Pattern.compile("^(.+)\\.kt$"), true);
             }
 
+            @TestMetadata("FunctionAnnotation1.kt")
+            public void testFunctionAnnotation1() throws Exception {
+                String fileName = JetTestUtils.navigationMetadata("idea/testData/completion/basic/common/annotations/FunctionAnnotation1.kt");
+                doTest(fileName);
+            }
+
+            @TestMetadata("FunctionAnnotation2.kt")
+            public void testFunctionAnnotation2() throws Exception {
+                String fileName = JetTestUtils.navigationMetadata("idea/testData/completion/basic/common/annotations/FunctionAnnotation2.kt");
+                doTest(fileName);
+            }
+
             @TestMetadata("NoParameterAnnotationAutoPopup1.kt")
             public void testNoParameterAnnotationAutoPopup1() throws Exception {
                 String fileName = JetTestUtils.navigationMetadata("idea/testData/completion/basic/common/annotations/NoParameterAnnotationAutoPopup1.kt");
@@ -930,6 +942,12 @@ public class JSBasicCompletionTestGenerated extends AbstractJSBasicCompletionTes
                 doTest(fileName);
             }
 
+            @TestMetadata("ParameterAnnotation7.kt")
+            public void testParameterAnnotation7() throws Exception {
+                String fileName = JetTestUtils.navigationMetadata("idea/testData/completion/basic/common/annotations/ParameterAnnotation7.kt");
+                doTest(fileName);
+            }
+
             @TestMetadata("ParameterAnnotation8.kt")
             public void testParameterAnnotation8() throws Exception {
                 String fileName = JetTestUtils.navigationMetadata("idea/testData/completion/basic/common/annotations/ParameterAnnotation8.kt");
@@ -957,6 +975,12 @@ public class JSBasicCompletionTestGenerated extends AbstractJSBasicCompletionTes
             @TestMetadata("ParameterAnnotationAutoPopup2.kt")
             public void testParameterAnnotationAutoPopup2() throws Exception {
                 String fileName = JetTestUtils.navigationMetadata("idea/testData/completion/basic/common/annotations/ParameterAnnotationAutoPopup2.kt");
+                doTest(fileName);
+            }
+
+            @TestMetadata("TopLevelAnnotation.kt")
+            public void testTopLevelAnnotation() throws Exception {
+                String fileName = JetTestUtils.navigationMetadata("idea/testData/completion/basic/common/annotations/TopLevelAnnotation.kt");
                 doTest(fileName);
             }
         }
