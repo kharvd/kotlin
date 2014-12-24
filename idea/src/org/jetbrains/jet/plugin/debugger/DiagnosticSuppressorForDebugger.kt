@@ -20,14 +20,14 @@ import org.jetbrains.jet.lang.resolve.diagnostics.DiagnosticsWithSuppression
 import org.jetbrains.jet.lang.diagnostics.Diagnostic
 import org.jetbrains.jet.lang.psi.JetFile
 import org.jetbrains.jet.lang.diagnostics.Errors
-import org.jetbrains.jet.lang.psi.codeFragmentUtil.skipVisibilityCheck
+import org.jetbrains.jet.lang.psi.codeFragmentUtil.suppressDiagnosticsInDebugMode
 
 public class DiagnosticSuppressorForDebugger : DiagnosticsWithSuppression.DiagnosticSuppressor {
     override fun isSuppressed(diagnostic: Diagnostic): Boolean {
         val element = diagnostic.getPsiElement()
         val containingFile = element.getContainingFile()
 
-        if (containingFile is JetFile && containingFile.skipVisibilityCheck) {
+        if (containingFile is JetFile && containingFile.suppressDiagnosticsInDebugMode) {
             val diagnosticFactory = diagnostic.getFactory()
             return diagnosticFactory == Errors.INVISIBLE_MEMBER ||
                    diagnosticFactory == Errors.INVISIBLE_REFERENCE ||

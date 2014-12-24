@@ -46,7 +46,7 @@ import org.jetbrains.jet.codegen.ClassFileFactory
 import org.jetbrains.jet.OutputFileCollection
 import org.jetbrains.jet.plugin.caches.resolve.analyzeFullyAndGetResult
 import org.jetbrains.jet.lang.psi.JetCodeFragment
-import org.jetbrains.jet.lang.psi.codeFragmentUtil.skipVisibilityCheck
+import org.jetbrains.jet.lang.psi.codeFragmentUtil.suppressDiagnosticsInDebugMode
 import com.intellij.openapi.diagnostic.Logger
 import org.jetbrains.jet.codegen.CompilationErrorHandler
 import org.jetbrains.jet.lang.diagnostics.Severity
@@ -327,7 +327,7 @@ private fun createFileForDebugger(codeFragment: JetCodeFragment,
     fileText = fileText.replace("!FUNCTION!", extractedFunction.getText()!!)
 
     val jetFile = codeFragment.createJetFile("debugFile.kt", fileText)
-    jetFile.skipVisibilityCheck = true
+    jetFile.suppressDiagnosticsInDebugMode = true
     return jetFile
 }
 
