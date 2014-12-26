@@ -25,6 +25,7 @@ import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiElementFinder;
 import com.intellij.psi.PsiPackage;
 import com.intellij.psi.impl.JavaPsiFacadeImpl;
+import com.intellij.psi.impl.PsiElementFinderImpl;
 import com.intellij.psi.impl.file.impl.JavaFileManager;
 import com.intellij.psi.search.GlobalSearchScope;
 import org.jetbrains.annotations.NotNull;
@@ -49,7 +50,7 @@ public class JavaPsiFacadeKotlinHacks {
         this.isCoreJavaFileManager = javaFileManager instanceof CoreJavaFileManager;
         this.extensionPsiElementFinders = Lists.newArrayList();
         for (PsiElementFinder finder : project.getExtensions(PsiElementFinder.EP_NAME)) {
-            if (!(finder instanceof KotlinFinderMarker)) {
+            if (!(finder instanceof KotlinFinderMarker || finder instanceof PsiElementFinderImpl)) {
                 this.extensionPsiElementFinders.add(finder);
             }
         }
