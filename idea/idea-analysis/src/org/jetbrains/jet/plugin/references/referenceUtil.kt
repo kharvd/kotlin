@@ -41,7 +41,7 @@ import org.jetbrains.jet.lang.psi.psiUtil.getNonStrictParentOfType
 public val PsiReference.unwrappedTargets: Set<PsiElement>
     get() {
         fun PsiElement.adjust(): PsiElement? {
-            val target = unwrapped
+            val target = unwrapped?.getOriginalElement()
             return when {
                 target is JetPropertyAccessor -> target.getNonStrictParentOfType<JetProperty>()
                 target is JetObjectDeclaration && target.isClassObject() -> target.getNonStrictParentOfType<JetClass>()
@@ -56,7 +56,7 @@ public val PsiReference.unwrappedTargets: Set<PsiElement>
     }
 
 public fun PsiReference.matchesTarget(target: PsiElement): Boolean {
-    val unwrapped = target.unwrapped
+    val unwrapped = target.unwrapped?.getOriginalElement()
     return when {
         unwrapped in unwrappedTargets ->
             true
