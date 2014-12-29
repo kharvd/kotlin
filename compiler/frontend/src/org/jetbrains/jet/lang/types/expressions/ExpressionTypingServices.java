@@ -33,10 +33,10 @@ import org.jetbrains.jet.lang.psi.*;
 import org.jetbrains.jet.lang.resolve.*;
 import org.jetbrains.jet.lang.resolve.calls.CallExpressionResolver;
 import org.jetbrains.jet.lang.resolve.calls.CallResolver;
-import org.jetbrains.jet.lang.resolve.calls.checkers.CallChecker;
-import org.jetbrains.jet.lang.resolve.calls.checkers.CallResolverExtensionProvider;
 import org.jetbrains.jet.lang.resolve.calls.context.ContextDependency;
 import org.jetbrains.jet.lang.resolve.calls.context.ResolutionContext;
+import org.jetbrains.jet.lang.resolve.calls.checkers.CallChecker;
+import org.jetbrains.jet.lang.resolve.calls.checkers.CompositeChecker;
 import org.jetbrains.jet.lang.resolve.calls.smartcasts.DataFlowInfo;
 import org.jetbrains.jet.lang.resolve.scopes.JetScope;
 import org.jetbrains.jet.lang.resolve.scopes.WritableScope;
@@ -67,7 +67,6 @@ public class ExpressionTypingServices {
     private DescriptorResolver descriptorResolver;
     private TypeResolver typeResolver;
     private AnnotationResolver annotationResolver;
-    private CallResolverExtensionProvider extensionProvider;
     private PartialBodyResolveProvider partialBodyResolveProvider;
     private KotlinBuiltIns builtIns;
 
@@ -129,11 +128,6 @@ public class ExpressionTypingServices {
     @Inject
     public void setAnnotationResolver(@NotNull AnnotationResolver annotationResolver) {
         this.annotationResolver = annotationResolver;
-    }
-
-    @Inject
-    public void setExtensionProvider(@NotNull CallResolverExtensionProvider extensionProvider) {
-        this.extensionProvider = extensionProvider;
     }
 
     @NotNull
@@ -417,7 +411,8 @@ public class ExpressionTypingServices {
     }
 
     @NotNull
-    public CallChecker createExtension(@NotNull JetScope scope, boolean isAnnotationContext) {
-        return extensionProvider.createExtension(scope == JetScope.Empty.INSTANCE$ ? null : scope.getContainingDeclaration(), isAnnotationContext);
+    public CallChecker getCallChecker() {
+        List<CallChecker> checkers = expressionTypingComponents.additionalCheckerProvider.getCallCheckers();
+        return new CompositeChecker(checkers);
     }
 }

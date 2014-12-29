@@ -37,17 +37,18 @@ import org.jetbrains.jet.lang.descriptors.ClassDescriptor
 import org.jetbrains.jet.lang.descriptors.TypeParameterDescriptor
 import org.jetbrains.jet.lang.resolve.DescriptorToSourceUtils
 import org.jetbrains.jet.lang.psi.JetTypeParameter
+import org.jetbrains.jet.lang.psi.JetPropertyAccessor
 import org.jetbrains.jet.lang.resolve.annotations.hasIntrinsicAnnotation
 import org.jetbrains.jet.lang.resolve.kotlin.nativeDeclarations.NativeFunChecker
 import org.jetbrains.jet.lang.psi.JetPropertyAccessor
 import org.jetbrains.jet.lang.descriptors.MemberDescriptor
+import org.jetbrains.jet.lang.resolve.calls.checkers.CallChecker
+import org.jetbrains.jet.lang.resolve.calls.checkers.NeedSyntheticChecker
 
-public object JavaDeclarationCheckerProvider : AdditionalCheckerProvider {
-
-    override val annotationCheckers: List<AnnotationChecker> = listOf(
-            PlatformStaticAnnotationChecker(), LocalFunInlineChecker(), ReifiedTypeParameterAnnotationChecker(), NativeFunChecker()
-    )
-}
+public object JavaDeclarationCheckerProvider : AdditionalCheckerProvider(
+        annotationCheckers = listOf(PlatformStaticAnnotationChecker(), LocalFunInlineChecker(), ReifiedTypeParameterAnnotationChecker(), NativeFunChecker()),
+        additionalCallCheckers = listOf(NeedSyntheticChecker())
+)
 
 public class LocalFunInlineChecker : AnnotationChecker {
 
