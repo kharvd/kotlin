@@ -45,7 +45,7 @@ import org.jetbrains.jet.lang.descriptors.MemberDescriptor
 import org.jetbrains.jet.lang.resolve.calls.checkers.CallChecker
 import org.jetbrains.jet.lang.resolve.calls.checkers.NeedSyntheticChecker
 
-public object JavaDeclarationCheckerProvider : AdditionalCheckerProvider(
+public object KotlinJvmCheckerProvider : AdditionalCheckerProvider(
         annotationCheckers = listOf(PlatformStaticAnnotationChecker(), LocalFunInlineChecker(), ReifiedTypeParameterAnnotationChecker(), NativeFunChecker()),
         additionalCallCheckers = listOf(NeedSyntheticChecker())
 )
