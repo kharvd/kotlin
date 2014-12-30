@@ -32,7 +32,7 @@ import org.jetbrains.k2js.translate.utils.AnnotationsUtils
 import org.jetbrains.jet.lang.descriptors.Visibilities
 import org.jetbrains.jet.lang.resolve.calls.checkers.CallChecker
 
-public object KotlinJsDeclarationCheckerProvider : AdditionalCheckerProvider(
+public object KotlinJsCheckerProvider : AdditionalCheckerProvider(
         annotationCheckers = listOf(NativeInvokeChecker(), NativeGetterChecker(), NativeSetterChecker()),
         additionalCallCheckers = listOf()
 )

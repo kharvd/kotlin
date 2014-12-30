@@ -31,7 +31,7 @@ import org.jetbrains.jet.di.InjectorForLazyResolve
 import org.jetbrains.jet.lang.descriptors.impl.ModuleDescriptorImpl
 import org.jetbrains.jet.analyzer.ModuleInfo
 import org.jetbrains.jet.analyzer.ModuleContent
-import org.jetbrains.k2js.resolve.KotlinJsDeclarationCheckerProvider
+import org.jetbrains.k2js.resolve.KotlinJsCheckerProvider
 import org.jetbrains.jet.lang.types.DynamicTypesAllowed
 
 public class JsResolverForModule(
@@ -56,7 +56,7 @@ public object JsAnalyzerFacade : AnalyzerFacade<JsResolverForModule, PlatformAna
         )
 
         val injector = InjectorForLazyResolve(project, globalContext, moduleDescriptor, declarationProviderFactory, BindingTraceContext(),
-                                              KotlinJsDeclarationCheckerProvider, DynamicTypesAllowed())
+                                              KotlinJsCheckerProvider, DynamicTypesAllowed())
         val resolveSession = injector.getResolveSession()!!
         moduleDescriptor.initialize(resolveSession.getPackageFragmentProvider())
         return JsResolverForModule(resolveSession)
