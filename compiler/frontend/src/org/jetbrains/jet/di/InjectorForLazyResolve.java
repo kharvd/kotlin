@@ -43,7 +43,6 @@ import org.jetbrains.jet.lang.resolve.DelegatedPropertyResolver;
 import org.jetbrains.jet.lang.resolve.TypeResolver;
 import org.jetbrains.jet.lang.resolve.QualifiedExpressionResolver;
 import org.jetbrains.jet.lang.resolve.TypeResolver.FlexibleTypeCapabilitiesProvider;
-import org.jetbrains.jet.lang.resolve.calls.extensions.CallResolverExtensionProvider;
 import org.jetbrains.jet.lang.resolve.PartialBodyResolveProvider;
 import org.jetbrains.jet.lang.resolve.calls.CallCompleter;
 import org.jetbrains.jet.lang.resolve.calls.CandidateResolver;
@@ -86,7 +85,6 @@ public class InjectorForLazyResolve {
     private final TypeResolver typeResolver;
     private final QualifiedExpressionResolver qualifiedExpressionResolver;
     private final FlexibleTypeCapabilitiesProvider flexibleTypeCapabilitiesProvider;
-    private final CallResolverExtensionProvider callResolverExtensionProvider;
     private final PartialBodyResolveProvider partialBodyResolveProvider;
     private final CallCompleter callCompleter;
     private final CandidateResolver candidateResolver;
@@ -132,7 +130,6 @@ public class InjectorForLazyResolve {
         this.qualifiedExpressionResolver = new QualifiedExpressionResolver();
         this.flexibleTypeCapabilitiesProvider = new FlexibleTypeCapabilitiesProvider();
         this.typeResolver = new TypeResolver(annotationResolver, qualifiedExpressionResolver, moduleDescriptor, flexibleTypeCapabilitiesProvider, storageManager, lazyResolveToken, dynamicTypesSettings);
-        this.callResolverExtensionProvider = new CallResolverExtensionProvider();
         this.partialBodyResolveProvider = new PartialBodyResolveProvider();
         this.candidateResolver = new CandidateResolver();
         this.callCompleter = new CallCompleter(argumentTypeResolver, candidateResolver);
@@ -170,7 +167,6 @@ public class InjectorForLazyResolve {
         expressionTypingServices.setCallExpressionResolver(callExpressionResolver);
         expressionTypingServices.setCallResolver(callResolver);
         expressionTypingServices.setDescriptorResolver(descriptorResolver);
-        expressionTypingServices.setExtensionProvider(callResolverExtensionProvider);
         expressionTypingServices.setPartialBodyResolveProvider(partialBodyResolveProvider);
         expressionTypingServices.setProject(project);
         expressionTypingServices.setTypeResolver(typeResolver);

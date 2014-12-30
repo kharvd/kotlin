@@ -26,7 +26,7 @@ import org.jetbrains.jet.lang.types.expressions.ExpressionTypingUtils;
 import org.jetbrains.jet.lang.resolve.TypeResolver;
 import org.jetbrains.jet.context.GlobalContext;
 import org.jetbrains.jet.storage.StorageManager;
-import org.jetbrains.jet.lang.resolve.kotlin.JavaDeclarationCheckerProvider;
+import org.jetbrains.jet.lang.resolve.kotlin.KotlinJvmCheckerProvider;
 import org.jetbrains.jet.lang.resolve.AnnotationResolver;
 import org.jetbrains.jet.lang.resolve.calls.CallResolver;
 import org.jetbrains.jet.lang.resolve.calls.ArgumentTypeResolver;
@@ -40,7 +40,6 @@ import org.jetbrains.jet.lang.types.DynamicTypesSettings;
 import org.jetbrains.jet.lang.types.expressions.ForLoopConventionsChecker;
 import org.jetbrains.jet.lang.reflect.ReflectionTypes;
 import org.jetbrains.jet.lang.resolve.calls.CallExpressionResolver;
-import org.jetbrains.jet.lang.resolve.calls.extensions.CallResolverExtensionProvider;
 import org.jetbrains.jet.lang.resolve.PartialBodyResolveProvider;
 import org.jetbrains.jet.lang.resolve.QualifiedExpressionResolver;
 import org.jetbrains.jet.lang.resolve.TypeResolver.FlexibleTypeCapabilitiesProvider;
@@ -62,7 +61,7 @@ public class InjectorForTests {
     private final TypeResolver typeResolver;
     private final GlobalContext globalContext;
     private final StorageManager storageManager;
-    private final JavaDeclarationCheckerProvider javaDeclarationCheckerProvider;
+    private final KotlinJvmCheckerProvider kotlinJvmCheckerProvider;
     private final AnnotationResolver annotationResolver;
     private final CallResolver callResolver;
     private final ArgumentTypeResolver argumentTypeResolver;
@@ -76,7 +75,6 @@ public class InjectorForTests {
     private final ForLoopConventionsChecker forLoopConventionsChecker;
     private final ReflectionTypes reflectionTypes;
     private final CallExpressionResolver callExpressionResolver;
-    private final CallResolverExtensionProvider callResolverExtensionProvider;
     private final PartialBodyResolveProvider partialBodyResolveProvider;
     private final QualifiedExpressionResolver qualifiedExpressionResolver;
     private final FlexibleTypeCapabilitiesProvider flexibleTypeCapabilitiesProvider;
@@ -103,7 +101,7 @@ public class InjectorForTests {
         this.lazinessToken = new LazinessToken();
         this.dynamicTypesSettings = new DynamicTypesSettings();
         this.typeResolver = new TypeResolver(annotationResolver, qualifiedExpressionResolver, moduleDescriptor, flexibleTypeCapabilitiesProvider, storageManager, lazinessToken, dynamicTypesSettings);
-        this.javaDeclarationCheckerProvider = JavaDeclarationCheckerProvider.INSTANCE$;
+        this.kotlinJvmCheckerProvider = KotlinJvmCheckerProvider.INSTANCE$;
         this.argumentTypeResolver = new ArgumentTypeResolver();
         this.candidateResolver = new CandidateResolver();
         this.callCompleter = new CallCompleter(argumentTypeResolver, candidateResolver);
@@ -113,7 +111,6 @@ public class InjectorForTests {
         this.forLoopConventionsChecker = new ForLoopConventionsChecker();
         this.reflectionTypes = new ReflectionTypes(moduleDescriptor);
         this.callExpressionResolver = new CallExpressionResolver();
-        this.callResolverExtensionProvider = new CallResolverExtensionProvider();
         this.partialBodyResolveProvider = new PartialBodyResolveProvider();
 
         this.descriptorResolver.setAnnotationResolver(annotationResolver);
@@ -128,7 +125,6 @@ public class InjectorForTests {
         this.expressionTypingServices.setCallExpressionResolver(callExpressionResolver);
         this.expressionTypingServices.setCallResolver(callResolver);
         this.expressionTypingServices.setDescriptorResolver(descriptorResolver);
-        this.expressionTypingServices.setExtensionProvider(callResolverExtensionProvider);
         this.expressionTypingServices.setPartialBodyResolveProvider(partialBodyResolveProvider);
         this.expressionTypingServices.setProject(project);
         this.expressionTypingServices.setTypeResolver(typeResolver);
@@ -154,7 +150,7 @@ public class InjectorForTests {
         delegatedPropertyResolver.setCallResolver(callResolver);
         delegatedPropertyResolver.setExpressionTypingServices(expressionTypingServices);
 
-        expressionTypingComponents.setAdditionalCheckerProvider(javaDeclarationCheckerProvider);
+        expressionTypingComponents.setAdditionalCheckerProvider(kotlinJvmCheckerProvider);
         expressionTypingComponents.setBuiltIns(kotlinBuiltIns);
         expressionTypingComponents.setCallResolver(callResolver);
         expressionTypingComponents.setControlStructureTypingUtils(controlStructureTypingUtils);

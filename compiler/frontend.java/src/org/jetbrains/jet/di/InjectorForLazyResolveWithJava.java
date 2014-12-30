@@ -41,7 +41,7 @@ import org.jetbrains.jet.lang.resolve.java.resolver.JavaSourceElementFactoryImpl
 import org.jetbrains.jet.lang.resolve.java.JavaFlexibleTypeCapabilitiesProvider;
 import org.jetbrains.jet.context.LazyResolveToken;
 import org.jetbrains.jet.lang.resolve.java.JavaLazyAnalyzerPostConstruct;
-import org.jetbrains.jet.lang.resolve.kotlin.JavaDeclarationCheckerProvider;
+import org.jetbrains.jet.lang.resolve.kotlin.KotlinJvmCheckerProvider;
 import org.jetbrains.jet.lang.resolve.AnnotationResolver;
 import org.jetbrains.jet.lang.resolve.calls.CallResolver;
 import org.jetbrains.jet.lang.resolve.calls.ArgumentTypeResolver;
@@ -57,7 +57,6 @@ import org.jetbrains.jet.lang.resolve.DescriptorResolver;
 import org.jetbrains.jet.lang.resolve.DelegatedPropertyResolver;
 import org.jetbrains.jet.lang.resolve.TypeResolver;
 import org.jetbrains.jet.lang.resolve.QualifiedExpressionResolver;
-import org.jetbrains.jet.lang.resolve.calls.extensions.CallResolverExtensionProvider;
 import org.jetbrains.jet.lang.resolve.PartialBodyResolveProvider;
 import org.jetbrains.jet.lang.resolve.calls.CallCompleter;
 import org.jetbrains.jet.lang.resolve.calls.CandidateResolver;
@@ -104,7 +103,7 @@ public class InjectorForLazyResolveWithJava {
     private final JavaFlexibleTypeCapabilitiesProvider javaFlexibleTypeCapabilitiesProvider;
     private final LazyResolveToken lazyResolveToken;
     private final JavaLazyAnalyzerPostConstruct javaLazyAnalyzerPostConstruct;
-    private final JavaDeclarationCheckerProvider javaDeclarationCheckerProvider;
+    private final KotlinJvmCheckerProvider kotlinJvmCheckerProvider;
     private final AnnotationResolver annotationResolver;
     private final CallResolver callResolver;
     private final ArgumentTypeResolver argumentTypeResolver;
@@ -120,7 +119,6 @@ public class InjectorForLazyResolveWithJava {
     private final DelegatedPropertyResolver delegatedPropertyResolver;
     private final TypeResolver typeResolver;
     private final QualifiedExpressionResolver qualifiedExpressionResolver;
-    private final CallResolverExtensionProvider callResolverExtensionProvider;
     private final PartialBodyResolveProvider partialBodyResolveProvider;
     private final CallCompleter callCompleter;
     private final CandidateResolver candidateResolver;
@@ -173,7 +171,7 @@ public class InjectorForLazyResolveWithJava {
         this.javaFlexibleTypeCapabilitiesProvider = new JavaFlexibleTypeCapabilitiesProvider();
         this.lazyResolveToken = new LazyResolveToken();
         this.javaLazyAnalyzerPostConstruct = new JavaLazyAnalyzerPostConstruct();
-        this.javaDeclarationCheckerProvider = JavaDeclarationCheckerProvider.INSTANCE$;
+        this.kotlinJvmCheckerProvider = KotlinJvmCheckerProvider.INSTANCE$;
         this.annotationResolver = new AnnotationResolver();
         this.callResolver = new CallResolver();
         this.argumentTypeResolver = new ArgumentTypeResolver();
@@ -189,7 +187,6 @@ public class InjectorForLazyResolveWithJava {
         this.delegatedPropertyResolver = new DelegatedPropertyResolver();
         this.qualifiedExpressionResolver = new QualifiedExpressionResolver();
         this.typeResolver = new TypeResolver(annotationResolver, qualifiedExpressionResolver, module, javaFlexibleTypeCapabilitiesProvider, storageManager, lazyResolveToken, dynamicTypesSettings);
-        this.callResolverExtensionProvider = new CallResolverExtensionProvider();
         this.partialBodyResolveProvider = new PartialBodyResolveProvider();
         this.candidateResolver = new CandidateResolver();
         this.callCompleter = new CallCompleter(argumentTypeResolver, candidateResolver);
@@ -249,12 +246,11 @@ public class InjectorForLazyResolveWithJava {
         expressionTypingServices.setCallExpressionResolver(callExpressionResolver);
         expressionTypingServices.setCallResolver(callResolver);
         expressionTypingServices.setDescriptorResolver(descriptorResolver);
-        expressionTypingServices.setExtensionProvider(callResolverExtensionProvider);
         expressionTypingServices.setPartialBodyResolveProvider(partialBodyResolveProvider);
         expressionTypingServices.setProject(project);
         expressionTypingServices.setTypeResolver(typeResolver);
 
-        expressionTypingComponents.setAdditionalCheckerProvider(javaDeclarationCheckerProvider);
+        expressionTypingComponents.setAdditionalCheckerProvider(kotlinJvmCheckerProvider);
         expressionTypingComponents.setBuiltIns(kotlinBuiltIns);
         expressionTypingComponents.setCallResolver(callResolver);
         expressionTypingComponents.setControlStructureTypingUtils(controlStructureTypingUtils);
