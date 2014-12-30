@@ -43,7 +43,7 @@ import org.jetbrains.jet.lang.resolve.kotlin.nativeDeclarations.NativeFunChecker
 import org.jetbrains.jet.lang.psi.JetPropertyAccessor
 import org.jetbrains.jet.lang.descriptors.MemberDescriptor
 import org.jetbrains.jet.lang.resolve.calls.checkers.CallChecker
-import org.jetbrains.jet.lang.resolve.calls.checkers.NeedSyntheticChecker
+import org.jetbrains.jet.lang.resolve.java.calls.checkers.NeedSyntheticChecker
 
 public object KotlinJvmCheckerProvider : AdditionalCheckerProvider(
         annotationCheckers = listOf(PlatformStaticAnnotationChecker(), LocalFunInlineChecker(), ReifiedTypeParameterAnnotationChecker(), NativeFunChecker()),

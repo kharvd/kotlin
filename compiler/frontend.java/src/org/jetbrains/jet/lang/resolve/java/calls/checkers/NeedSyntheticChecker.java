@@ -14,12 +14,13 @@
  * limitations under the License.
  */
 
-package org.jetbrains.jet.lang.resolve.calls.checkers;
+package org.jetbrains.jet.lang.resolve.java.calls.checkers;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.jet.lang.descriptors.CallableDescriptor;
 import org.jetbrains.jet.lang.descriptors.CallableMemberDescriptor;
 import org.jetbrains.jet.lang.descriptors.Visibilities;
+import org.jetbrains.jet.lang.resolve.calls.checkers.CallChecker;
 import org.jetbrains.jet.lang.resolve.calls.context.BasicCallResolutionContext;
 import org.jetbrains.jet.lang.resolve.calls.model.ResolvedCall;
 import org.jetbrains.jet.lang.resolve.scopes.JetScope;
