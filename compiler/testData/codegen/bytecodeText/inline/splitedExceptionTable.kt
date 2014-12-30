@@ -26,4 +26,4 @@ fun box() : String {
 }
 
 // maybe we should check test data
-// 13 TRYCATCHBLOCK
+// 11 TRYCATCHBLOCK

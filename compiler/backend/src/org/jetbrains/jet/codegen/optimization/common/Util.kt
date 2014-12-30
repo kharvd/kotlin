@@ -20,8 +20,48 @@ import org.jetbrains.org.objectweb.asm.tree.AbstractInsnNode
 import org.jetbrains.org.objectweb.asm.Opcodes
 import org.jetbrains.org.objectweb.asm.tree.analysis.Frame
 import org.jetbrains.org.objectweb.asm.tree.analysis.BasicValue
+import org.jetbrains.org.objectweb.asm.tree.MethodNode
 
 fun AbstractInsnNode.isStoreOperation(): Boolean = getOpcode() in Opcodes.ISTORE..Opcodes.ASTORE
 fun AbstractInsnNode.isLoadOperation(): Boolean = getOpcode() in Opcodes.ILOAD..Opcodes.ALOAD
 fun AbstractInsnNode.isReturnOperation(): Boolean = getOpcode() in Opcodes.IRETURN..Opcodes.RETURN
 fun <V : BasicValue?> Frame<V>.getStackTop(): V = getStack(getStackSize() - 1)
+
+val AbstractInsnNode.isMeaningful : Boolean get() =
+    when (this.getType()) {
+        AbstractInsnNode.LABEL, AbstractInsnNode.LINE, AbstractInsnNode.FRAME -> false
+        else -> true
+    }
+
+class InsnStream(val from: AbstractInsnNode, val to: AbstractInsnNode?) : Stream<AbstractInsnNode> {
+    override fun iterator(): Iterator<AbstractInsnNode> {
+        return object : Iterator<AbstractInsnNode> {
+            var current = from
+            override fun next(): AbstractInsnNode {
+                val result = current
+                current = current.getNext()
+                return result
+            }
+            override fun hasNext() = current != to
+        }
+    }
+}
+
+fun MethodNode.prepareForEmitting() {
+    tryCatchBlocks = tryCatchBlocks.filter { tcb ->
+        InsnStream(tcb.start, tcb.end).any { insn ->
+            insn.isMeaningful
+        }
+    }
+
+    var current = instructions.getLast()
+    while (!current.isMeaningful) {
+        val prev = current.getPrevious()
+
+        if (current.getType() == AbstractInsnNode.LINE) {
+            instructions.remove(current)
+        }
+
+        current = prev
+    }
+}
