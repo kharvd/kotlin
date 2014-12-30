@@ -103,7 +103,7 @@ private fun generatorForLazyTopDownAnalyzerBasic() =
 
             publicField<LazyTopDownAnalyzer>()
 
-            field<AdditionalCheckerProvider.Empty>()
+            field<AdditionalCheckerProvider.DefaultProvider>()
         }
 
 private fun generatorForLazyBodyResolve() =
@@ -215,7 +215,7 @@ private fun generatorForMacro() =
             field<GlobalContext>(useAsContext = true,
                   init = GivenExpression("org.jetbrains.jet.context.ContextPackage.GlobalContext()"))
 
-            field<AdditionalCheckerProvider.Empty>()
+            field<AdditionalCheckerProvider.DefaultProvider>()
         }
 
 private fun generatorForTests() =
