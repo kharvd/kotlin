@@ -19,7 +19,7 @@ package org.jetbrains.jet.lang.resolve.calls.context;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.jet.lang.resolve.BindingTrace;
-import org.jetbrains.jet.lang.resolve.calls.extensions.CallResolverExtension;
+import org.jetbrains.jet.lang.resolve.calls.checkers.CallChecker;
 import org.jetbrains.jet.lang.resolve.calls.smartcasts.DataFlowInfo;
 import org.jetbrains.jet.lang.resolve.scopes.JetScope;
 import org.jetbrains.jet.lang.types.JetType;
@@ -39,7 +39,7 @@ public abstract class ResolutionContext<Context extends ResolutionContext<Contex
     @NotNull
     public final ResolutionResultsCache resolutionResultsCache;
     @NotNull
-    public final CallResolverExtension callResolverExtension;
+    public final CallChecker callChecker;
 
     public final boolean isAnnotationContext;
 
@@ -52,7 +52,7 @@ public abstract class ResolutionContext<Context extends ResolutionContext<Contex
             @NotNull DataFlowInfo dataFlowInfo,
             @NotNull ContextDependency contextDependency,
             @NotNull ResolutionResultsCache resolutionResultsCache,
-            @NotNull CallResolverExtension callResolverExtension,
+            @NotNull CallChecker callChecker,
             boolean isAnnotationContext,
             boolean collectAllCandidates
     ) {
@@ -62,7 +62,7 @@ public abstract class ResolutionContext<Context extends ResolutionContext<Contex
         this.dataFlowInfo = dataFlowInfo;
         this.contextDependency = contextDependency;
         this.resolutionResultsCache = resolutionResultsCache;
-        this.callResolverExtension = callResolverExtension;
+        this.callChecker = callChecker;
         this.isAnnotationContext = isAnnotationContext;
         this.collectAllCandidates = collectAllCandidates;
     }

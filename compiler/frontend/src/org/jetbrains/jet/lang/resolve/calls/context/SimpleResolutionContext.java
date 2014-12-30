@@ -18,7 +18,7 @@ package org.jetbrains.jet.lang.resolve.calls.context;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.jet.lang.resolve.BindingTrace;
-import org.jetbrains.jet.lang.resolve.calls.extensions.CallResolverExtension;
+import org.jetbrains.jet.lang.resolve.calls.checkers.CallChecker;
 import org.jetbrains.jet.lang.resolve.calls.smartcasts.DataFlowInfo;
 import org.jetbrains.jet.lang.resolve.scopes.JetScope;
 import org.jetbrains.jet.lang.types.JetType;
@@ -31,11 +31,11 @@ public class SimpleResolutionContext extends ResolutionContext<SimpleResolutionC
             @NotNull DataFlowInfo dataFlowInfo,
             @NotNull ContextDependency contextDependency,
             @NotNull ResolutionResultsCache resolutionResultsCache,
-            @NotNull CallResolverExtension callResolverExtension,
+            @NotNull CallChecker callChecker,
             boolean isAnnotationContext,
             boolean collectAllCandidates
     ) {
-        super(trace, scope, expectedType, dataFlowInfo, contextDependency, resolutionResultsCache, callResolverExtension,
+        super(trace, scope, expectedType, dataFlowInfo, contextDependency, resolutionResultsCache, callChecker,
               isAnnotationContext, collectAllCandidates);
     }
 
@@ -45,10 +45,10 @@ public class SimpleResolutionContext extends ResolutionContext<SimpleResolutionC
             @NotNull JetType expectedType,
             @NotNull DataFlowInfo dataFlowInfo,
             @NotNull ContextDependency contextDependency,
-            @NotNull CallResolverExtension callResolverExtension
+            @NotNull CallChecker callChecker
     ) {
         this(trace, scope, expectedType, dataFlowInfo, contextDependency, new ResolutionResultsCacheImpl(),
-             callResolverExtension, false, false);
+             callChecker, false, false);
     }
 
     @Override
@@ -62,7 +62,7 @@ public class SimpleResolutionContext extends ResolutionContext<SimpleResolutionC
             boolean collectAllCandidates
     ) {
         return new SimpleResolutionContext(
-                trace, scope, expectedType, dataFlowInfo, contextDependency, resolutionResultsCache, callResolverExtension,
+                trace, scope, expectedType, dataFlowInfo, contextDependency, resolutionResultsCache, callChecker,
                 isAnnotationContext, collectAllCandidates);
     }
 }

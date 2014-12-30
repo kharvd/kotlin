@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.jetbrains.jet.lang.resolve.calls.extensions
+package org.jetbrains.jet.lang.resolve.calls.checkers
 
 import org.jetbrains.jet.lang.descriptors.CallableDescriptor
 import org.jetbrains.jet.lang.resolve.calls.model.ResolvedCall
@@ -33,8 +33,8 @@ import org.jetbrains.jet.lang.resolve.calls.callUtil.*
 import org.jetbrains.jet.lang.descriptors.SimpleFunctionDescriptor
 import org.jetbrains.jet.lang.resolve.calls.model.VariableAsFunctionResolvedCall
 
-class CapturingInClosureExtension : CallResolverExtension {
-    override fun <F : CallableDescriptor> run(resolvedCall: ResolvedCall<F>, context: BasicCallResolutionContext) {
+class CapturingInClosureChecker : CallChecker {
+    override fun <F : CallableDescriptor> check(resolvedCall: ResolvedCall<F>, context: BasicCallResolutionContext) {
         val variableResolvedCall = if (resolvedCall is VariableAsFunctionResolvedCall) resolvedCall.variableCall else resolvedCall
         val variableDescriptor = variableResolvedCall.getResultingDescriptor() as? VariableDescriptor
         if (variableDescriptor != null) {
