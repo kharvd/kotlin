@@ -28,8 +28,9 @@ import java.util.BitSet
 import org.jetbrains.org.objectweb.asm.tree.VarInsnNode
 import org.jetbrains.org.objectweb.asm.tree.IincInsnNode
 import org.jetbrains.jet.codegen.optimization.common.isStoreOperation
+import org.jetbrains.jet.codegen.optimization.common.BasicValueWrapper
 
-class ReachingDefinitionsValue private (storedValue: BasicValue) : BasicValue(storedValue.getType()) {
+class ReachingDefinitionsValue private (storedValue: BasicValue) : BasicValueWrapper(storedValue) {
     class object {
         fun createByDefinitionIndex(definitionIndex: Int, storedValue: BasicValue): ReachingDefinitionsValue {
             val result = ReachingDefinitionsValue(storedValue)
@@ -39,12 +40,6 @@ class ReachingDefinitionsValue private (storedValue: BasicValue) : BasicValue(st
     }
 
     val definitionIndices: MutableSet<Int> = hashSetOf()
-    var basicValue = storedValue
-    {
-        if (basicValue is ReachingDefinitionsValue) {
-            basicValue = (basicValue as ReachingDefinitionsValue).basicValue
-        }
-    }
 
     fun merge(other: ReachingDefinitionsValue): ReachingDefinitionsValue {
         definitionIndices.addAll(other.definitionIndices)

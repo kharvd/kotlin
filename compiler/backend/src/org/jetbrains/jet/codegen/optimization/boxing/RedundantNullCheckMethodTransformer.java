@@ -40,7 +40,7 @@ public class RedundantNullCheckMethodTransformer extends MethodTransformer {
         InsnList insnList = methodNode.instructions;
         Frame<BasicValue>[] frames = analyze(
                 internalClassName, methodNode,
-                new BoxingInterpreter(insnList)
+                new NullabilityInterpreter(insnList)
         );
 
         List<AbstractInsnNode> insnsToOptimize = new ArrayList<AbstractInsnNode>();
@@ -50,8 +50,7 @@ public class RedundantNullCheckMethodTransformer extends MethodTransformer {
             AbstractInsnNode insn = insnList.get(i);
 
             if ((insn.getOpcode() == Opcodes.IFNULL || insn.getOpcode() == Opcodes.IFNONNULL) &&
-                frame != null && frame.getStack(frame.getStackSize() - 1) instanceof BoxedBasicValue) {
-
+                frame != null && frame.getStack(frame.getStackSize() - 1) instanceof NotNullBasicValue) {
                 insnsToOptimize.add(insn);
             }
         }

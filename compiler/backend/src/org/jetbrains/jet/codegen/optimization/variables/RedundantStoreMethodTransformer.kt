@@ -33,6 +33,7 @@ import org.jetbrains.jet.codegen.optimization.common.InsnStream
 import org.jetbrains.org.objectweb.asm.tree.JumpInsnNode
 import org.jetbrains.org.objectweb.asm.tree.LabelNode
 import org.jetbrains.org.objectweb.asm.tree.InsnList
+import org.jetbrains.jet.codegen.optimization.common.BasicValueWrapper
 
 public class RedundantStoreMethodTransformer : MethodTransformer() {
     override fun transform(internalClassName: String, methodNode: MethodNode) {
@@ -87,7 +88,7 @@ private class LoadedValueInterpreter : OptimizationBasicInterpreter() {
         return super.copyOperation(insn, value)
     }
 
-    override fun merge(v: BasicValue, w: BasicValue): BasicValue {
+    override fun merge(v: BasicValue, w: BasicValue): BasicValue? {
         if (v is LoadedValue && v == w) {
            return v.merge(w as LoadedValue)
         }
@@ -104,10 +105,8 @@ private class LoadedValueInterpreter : OptimizationBasicInterpreter() {
     }
 }
 
-private class LoadedValue(val insn: AbstractInsnNode, val wrappedValue: BasicValue) : BasicValue(wrappedValue.getType()) {
+private class LoadedValue(val insn: AbstractInsnNode, wrappedValue: BasicValue) : BasicValueWrapper(wrappedValue) {
     var dupInsn: AbstractInsnNode? = null
-    val basicValue: BasicValue get() = (wrappedValue as? LoadedValue)?.basicValue ?: wrappedValue
-    
     val dupInsnOrThis: AbstractInsnNode get() = dupInsn ?: insn
 
     override fun equals(other: Any?): Boolean {
